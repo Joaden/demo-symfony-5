@@ -1,0 +1,231 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}{{ parent() }}
+    {#<link rel="stylesheet" type="text/css" href="{{ asset('bundles/backofficesite/global/plugins/select2/select2.css') }}"/>#}
+    {#<link rel="stylesheet" href="{{ asset('bundles/backofficesite/global/plugins/data-tables/DT_bootstrap.css') }}"/>#}
+    {#<link rel="stylesheet" type="text/css" href="{{ asset('bundles/backofficesite/global/plugins/bootstrap-datepicker/css/datepicker.css') }}">#}
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../public/assets/css/app.css">
+
+
+{% endblock %}
+
+{#{% block MenuUsers %}active{% endblock %}#}
+{#{% block MenuUsersList %}class="active"{% endblock %}#}
+
+{#{% block title %}{{ parent() }} - {{ 'Liste des utilisateurs'|trans }}{% endblock %}#}
+{#{% block TitlePage %}{{ 'Liste des utilisateurs'|trans }}{% endblock %}#}
+{#{% block contentTitle %} <li>    <a href="{{ path('admin_user_list') }}">{{ 'liste des utilisateurs'|trans }}</a> </li>  {% endblock %}#}
+{% block content %}
+    <section>
+        <div class="container">
+            <div class="jumbotron">
+
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                    <div class="dashboard-stat blue">
+                        <div class="visual">
+                            <i class="fa fa-user"></i>
+                        </div>
+                        <div class="details">
+                            <div class="desc">
+                                {{ 'Total utilisateurs'|trans }} : {{ user|length }}
+                            </div>
+                            {#<div class="number">#}
+                            {#{{ user|length }}#}
+                            {#</div>#}
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h1 class="my-3">Nos utilisateurs</h1>
+                    {% if not is_granted('ROLE_USER') %}
+                        <a href="#" class="my-2 btn btn-success">Connexion</a>
+                    {% else %}
+                        <a href="#" class="my-2 btn btn-danger">Déconnexion</a>
+                    {% endif %}
+                    <div class="row">
+                        {% if user is defined %}
+                            {% for user in user %}
+                                <div class="col-3 mb-3">
+                                    <div class="border border-dark rounded p-2">
+                                        <h3>{{user.username}}</h3>
+                                        <p>user.roles</p>
+                                        <p>user.mail</p>
+                                        <p>user.tel</p>
+                                        <p>user.address</p>
+                                        <p>user.photo</p>
+                                        <p>user.date inscription</p>
+                                        <a href="#" class="btn btn-primary">Lire la suite</a>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+        <div class="portlet solid blue">
+                <div class="portlet-body">
+                    <h4 class="block">'Pour la période du '|trans  <span class="js-change-date1"> date1|dateFr </span>  'au'|trans  <span class="js-change-date2"> date2|dateFr </span></h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="portlet box blue">
+                <div class="portlet-title">
+                    <div class="caption" style="line-height: 8px;">
+                         'Trie par date'|trans
+                    </div>
+                </div>
+                <div class="portlet-body text-center">
+                    <div class="row">
+                        <div class="col-lg-12 text-center">
+                            <div style="float:left;width:80%">
+                                <div class="input-daterange input-group" id="datepicker">
+                                    <input type="text" class="input-sm js-date1 form-control" value=" date1|dateFrSimple " name="start" />
+                                    <span class="input-group-addon">{{ 'au'|trans }}</span>
+                                    <input type="text" class="input-sm js-date2 form-control" value=" date2|dateFrSimple "  name="end" />
+                                </div>
+                            </div>
+
+                            <!-- BEGIN Status SEARCH-->
+                            <div class="col-lg-4">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <label>Status</label>
+                                    <select name="statusAbo" id="js-tag-statusAbo" class="form-control statusAbo" multiple="multiple" data-placeholder="Select a status">
+                                        <option value="">Tous status</option>
+                                        <option value="Membre abonné">Membre abonné</option>
+                                        <option value="Membre désabonné">Membre désabonné</option>
+                                        <option value="Membre supprimé">Membre supprimé</option>
+                                        <option value="Affilié">Affilié</option>
+                                        <option value="Error Subscription">Error Subscription</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- END Status SEARCH-->
+
+                            <!-- BEGIN Campaign SEARCH-->
+                            <div class="col-lg-4">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <label>Users</label>
+                                    <select name="user" id="js-tag-user" class="form-control user" multiple="multiple" data-placeholder="Select a user">
+                                        <option value="">Choisir par user</option>
+                                        {% for user in users %}
+                                            <option value="{{ user.username }}">{{ user.username }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- END Campaign SEARCH-->
+
+                            <!-- BEGIN Mail SEARCH-->
+                            <div class="col-lg-4">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <label>Mail</label>
+                                    <input type="text" class="form-control js-tag-mail" id="js-tag-mail" name="search-mail" placeholder="Mail">
+                                </div>
+                            </div>
+                            <!-- END Mail SEARCH-->
+
+                            <div style="float:left"><button type="button" style="line-height: 1;" id="js-update-date" class="btn green">Ok</button></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+
+
+    <div class="js-content">
+    {% include 'users/template_list_users.html.twig' with {'user': user, 'entities': entities} %}
+        {#{% include '@BackOfficeUsers/Users/template_list_users.html.twig' with {'entities': entities, 'date1': date1, 'date2': date2, 'paymentToday': paymentToday, 'user': user, 'statusAbo': statusAbo} %}#}
+
+    </div>
+
+{% endblock %}
+{% block javascripts %}{{ parent() }}
+    {#<script type="text/javascript" src="{{ asset('bundles/backofficesite/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js') }}"></script>#}
+    {#<script type="text/javascript" src="{{ asset('bundles/backofficesite/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}"></script>#}
+    {#<script type="text/javascript" src="{{ asset('bundles/backofficesite/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js') }}"></script>#}
+
+    {#<script type="text/javascript" src="{{ asset('bundles/backofficesite/global/plugins/select2/select2.min.js') }}"></script>#}
+    {#<script type="text/javascript" src="{{ asset('bundles/backofficesite/global/plugins/data-tables/jquery.dataTables.min.js') }}"></script>#}
+    {#<script type="text/javascript" src="{{ asset('bundles/backofficesite/global/plugins/data-tables/tabletools/js/dataTables.tableTools.min.js') }}"></script>#}
+    {#<script type="text/javascript" src="{{ asset('bundles/backofficesite/global/plugins/data-tables/DT_bootstrap.js') }}"></script>#}
+    {#<script>#}
+
+        {#$(document).ready(function() {#}
+            {#$('#js-tag-statusAbo').select2({#}
+                {#closeOnSelect: false#}
+            {#});#}
+            {#$('#js-tag-campaign').select2({#}
+                {#closeOnSelect: false#}
+            {#});#}
+
+        {#});#}
+
+
+        {#$('#js-update-date').click(function(){#}
+
+            {#var newDate1 =  $('.js-date1').val();#}
+            {#var newDate2 =  $('.js-date2').val();#}
+            {#var statusAbo = $('#js-tag-statusAbo').val();#}
+            {#var user = $('#js-tag-user').val();#}
+            {#var mail = $('#js-tag-mail').val();#}
+
+
+            {#$(".js-content").html('<br><div class="text-center"><img src="{{ asset('bundles/backofficesite/global/img/loader.gif') }}" width=40px" height="40px" alt="loader"></div><br><br>');#}
+            {#$.ajax({#}
+                {#cache: "false",#}
+                {#type: "GET",#}
+                {#data : {#}
+                    {#date1: newDate1,#}
+                    {#date2: newDate2,#}
+                    {#statusAbo: statusAbo,#}
+                    {#user: user,#}
+                    {#mail: mail#}
+
+                {#},#}
+            {#url: Routing.generate('admin_ajax_users_list_d'),#}
+            {#dataType: "html",#}
+            {#success: function(data){#}
+            {#$(".js-content").html(data);#}
+
+            {#$(".js-change-date1").html(dateFr(newDate1));#}
+            {#$(".js-change-date2").html(dateFr(newDate2));#}
+
+            {#}#}
+            {#})#}
+        {#});#}
+
+        {#function dateFr(date) {#}
+            {#var myArray = date.split('/');#}
+            {#var months = ["janvier", "février", "mars", "avril", "mai", "juin",#}
+                    {#"juillet", "août", "septembre", "octobre", "novembre", "décembre"];#}
+            {#return myArray[0] + " " + months[parseInt(myArray[1])-1] + " " + myArray[2];#}
+        {#}#}
+
+        {#$('.input-daterange').datepicker({#}
+            {#format: "dd/mm/yyyy",#}
+            {#language: "fr"#}
+        {#});#}
+
+    {#</script>#}
+
+{% endblock %}

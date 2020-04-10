@@ -1,0 +1,193 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello IndexController!{% endblock %}
+{% block stylesheets %}{{ parent() }}
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../public/assets/css/app.css">
+
+
+{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Hello {{ controller_name }}! ✅</h1>
+
+    This friendly message is coming from:
+    <ul>
+        <li>Your controller at <code><a href="{{ 'C:/xampp/htdocs/SYMFONY/CourLior/demo/DemoSymfony5/src/Controller/IndexController.php'|file_link(0) }}">src/Controller/IndexController.php</a></code></li>
+        <li>Your template at <code><a href="{{ 'C:/xampp/htdocs/SYMFONY/CourLior/demo/DemoSymfony5/templates/index/index.html.twig'|file_link(0) }}">templates/index/index.html.twig</a></code></li>
+    </ul>
+</div>
+<section>
+    <div class="container">
+        <div class="jumbotron">
+            <div>
+                <h1 class="my-3">Anagramme</h1>
+
+
+                <div>
+                    <div class="col-lg-4">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label>Mot 1</label>
+                            <input type="text" class="form-control js-tag-phrase1" id="js-tag-phrase1" name="search-phrase1" placeholder="Ecrire un mot">
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label>Mot 2</label>
+                            <input type="text" class="form-control js-tag-phrase2" id="js-tag-phrase2" name="search-phrase2" placeholder="Ecrire un mot">
+                        </div>
+                    </div>
+                    <!-- END Mail SEARCH-->
+                    <div style="float:left"><button type="button" style="line-height: 1;" id="js-update-date" class="btn green">Ok</button></div>
+                </div>
+
+                {#<div class="row">#}
+                    {#{% if status is defined %}#}
+                            {#<div class="col-3 mb-3">#}
+                                {#<div class="border border-dark rounded p-2">#}
+                                    {#<div> {{ status }}</div><br>#}
+                                    {#<div>Les deux mots choisit sont biens des anagrammes! </div><br>#}
+                                    {#<div>{% for phrase1 in phrase1 %}{{ phrase1 }}{% endfor %}</div><br>#}
+                                    {#<div>{% for phrase2 in phrase2 %}{{ phrase2 }}{% endfor %}</div><br>#}
+                                    {#&#123;&#35;<div>{{ phrase2 }}</div><br>&#35;&#125;#}
+                                    {#&#123;&#35;<a href="#" class="btn btn-primary">Lire la suite</a>&#35;&#125;#}
+                                {#</div>#}
+                            {#</div>#}
+                    {#{% endif %}#}
+                {#</div>#}
+            </div>
+        </div>
+    </div>
+</section>
+
+    <div class="js-content">
+        {% include 'users/template_anagram.html.twig' with {'user': user, 'phrase1': phrase1, 'phrase2': phrase2, 'status': status} %}
+    </div>
+
+
+<section>
+    <div class="container">
+        <div class="jumbotron">
+            <div>
+                <h1 class="my-3">Nos utilisateurs</h1>
+                {% if not is_granted('ROLE_USER') %}
+                    <a href="#" class="my-2 btn btn-success">Connexion</a>
+                {% else %}
+                    <a href="#" class="my-2 btn btn-danger">Déconnexion</a>
+                {% endif %}
+                <div class="row">
+                    {% if user is defined %}
+                        {% for user in user %}
+                            <div class="col-3 mb-3">
+                                <div class="border border-dark rounded p-2">
+                                    <h3>{{user.username}}</h3>
+                                    <p>user.roles</p>
+                                    <p>user.mail</p>
+                                    <p>user.tel</p>
+                                    <p>user.address</p>
+                                    <p>user.photo</p>
+                                    <p>user.date inscription</p>
+                                    <a href="#" class="btn btn-primary">Lire la suite</a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block javascripts %}{{ parent() }}
+    {#<script type="text/javascript" src="{{ asset('bundles/backofficesite/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js') }}"></script>#}
+    {#<script type="text/javascript" src="{{ asset('bundles/backofficesite/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}"></script>#}
+    {#<script type="text/javascript" src="{{ asset('bundles/backofficesite/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js') }}"></script>#}
+
+    {#<script type="text/javascript" src="{{ asset('bundles/backofficesite/global/plugins/select2/select2.min.js') }}"></script>#}
+    {#<script type="text/javascript" src="{{ asset('bundles/backofficesite/global/plugins/data-tables/jquery.dataTables.min.js') }}"></script>#}
+    {#<script type="text/javascript" src="{{ asset('bundles/backofficesite/global/plugins/data-tables/tabletools/js/dataTables.tableTools.min.js') }}"></script>#}
+    {#<script type="text/javascript" src="{{ asset('bundles/backofficesite/global/plugins/data-tables/DT_bootstrap.js') }}"></script>#}
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script>
+
+
+    <script>
+
+        $(document).ready(function() {
+            $('#js-tag-statusAbo').select2({
+                closeOnSelect: false
+            });
+            $('#js-tag-user').select2({
+                closeOnSelect: false
+            });
+
+        });
+
+
+        $('#js-update-date').click(function(){
+
+//            var newDate1 =  $('.js-date1').val();
+//            var newDate2 =  $('.js-date2').val();
+            var statusAbo = $('#js-tag-statusAbo').val();
+            var user = $('#js-tag-user').val();
+            var mot1 = $('#js-tag-mot1').val();
+            var mot2 = $('#js-tag-mot2').val();
+
+
+            $(".js-content").html('<br><div class="text-center"><img src="{{ asset('bundles/backofficesite/global/img/loader.gif') }}" width=40px" height="40px" alt="loader"></div><br><br>');
+            $.ajax({
+                cache: "false",
+                type: "GET",
+                data : {
+//                    date1: newDate1,
+//                    date2: newDate2,
+                    statusAbo: statusAbo,
+                    user: user,
+                    mot1: mot1
+                    mot2: mot2
+
+                },
+                url: Routing.generate('admin_ajax_anagram'),
+                dataType: "html",
+                success: function(data){
+                    $(".js-content").html(data);
+
+                    $(".js-change-date1").html(dateFr(newDate1));
+                    $(".js-change-date2").html(dateFr(newDate2));
+
+                }
+            })
+        });
+
+        function dateFr(date) {
+            var myArray = date.split('/');
+            var months = ["janvier", "février", "mars", "avril", "mai", "juin",
+                "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
+            return myArray[0] + " " + months[parseInt(myArray[1])-1] + " " + myArray[2];
+        }
+
+        $('.input-daterange').datepicker({
+            format: "dd/mm/yyyy",
+            language: "fr"
+        });
+
+    </script>
+
+
+{% endblock %}

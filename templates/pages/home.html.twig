@@ -1,0 +1,113 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Agence de Limeil' %}
+
+{% block body %}
+<!-- <div class="containerTitle">
+        <h1 data-splitting class="headline headline--twirl">twirling</h1>
+</div> -->
+    <div class="jumbotron text center">
+        <!-- <div class="jumbotronTitle"> 
+            <a href="#">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>-->
+                <h1 class="titleSnake">Agence de Limeil-Brevannes</h1>
+           <!-- </a>
+         </div> -->
+    </div>
+<section>
+
+    <div class="container">
+        <h2>Nos nouveaux biens</h2><p>Bienvenue !!! Nous sommes le <?php echo date('d/m/Y h:i:s'); ?>{{ "now"|date("m/d/Y") }}.</p>
+            <?php echo "Bonjour, Comment puis-je vous aider? "; ?>
+        <div class="row flex">
+            {% for property in properties %}
+            <div class="col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                            {% include 'property/_propertyImageFile.html.twig' %}
+                                <!-- Route et action avec slugify -->
+                                <!-- twig se charge de convertir le getter et de l'utiliser -->
+                                <!-- méthode path, création du chemin avec un paramètre l'id (JSON) -->
+                                <a href="{{ path('property.show', {id: property.id, slug: property.slug}) }}">{{ property.title }} &lowast;</a> 
+                                <p class="click" style="font-size:10px;">&uArr; click here to see more !</p>
+                            </h5>
+                            <p class="card-text">{{ property.city }} ({{ property.postalCode }})</p>
+                            <div class="text-primary" style="font-weight: bold;font-size:2rem;">{{ property.formattedPrice }} €</div>
+                            <!-- sans la function formattedPrice 
+                            <div class="text-primary" style="front-weight: bold;font-size:2rem;">{{ property.Price | number_format(0, '', ' ') }} €</div> -->
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section>
+<div class="jumbotron text-center">
+    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                    <h3>Transaction</h3>
+                    <img src="../img/transaction.jpg" alt="transaction">
+                    <p>Gérez la vente de votre portefeuille de propriétés, terrains, les commerces, bureaux et propriétés de prestige</p>
+                    <p><a href="#" class="button">En savoir plus</a></p>
+                </div>
+                <div class="carousel-item">
+                    <h3>Location saisonnière</h3>
+                    <img src="../img/location.jpg" alt="location">
+				    <p>Avec notre calendrier gérez vos tarifs par jour/semaine/mois et saison ainsi que vos options et réservations</p>
+				    <p><a href="#" class="button">En savoir plus</a></p>
+                </div>
+                <div class="carousel-item">
+                    <h3>Programme neuf</h3>
+                    <img src="../img/neuf.jpg" alt="neuf">
+				    <p>Un module dédié aux biens neufs permet de gérer votre bien ainsi que les lots qui le composent</p>
+				    <p><a href="#" class="button">En savoir plus</a></p>
+                </div>
+                <div class="carousel-item">
+                    <h3>Commerces &amp; bureaux</h3>
+                    <img src="../img/commerce.jpg" alt="commerce">
+				    <p>Notre outil vous permet de détailler les activités et résultats des commerces et toutes les prestations spécifiques pour l'immobilier d'entreprise</p>
+				    <p><a href="#" class="button">En savoir plus</a></p>
+                </div>
+                <div class="carousel-item">
+                    <h3>Viager</h3>
+                    <img src="../img/viager.jpg" alt="viager">
+				    <p>Vous pouvez gérer les spécificités d'une vente en viager et en nue propriété avec le bouquet, la rente ainsi que l'age des occupants</p>
+				    <p><a href="#" class="button">En savoir plus</a></p>
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
+</section>
+
+<section id="skills">
+    <div class="container">
+        <div class="skills-header">
+            <h3>Our Skills</h3>
+            <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate obcaecati voluptates repudiandae quis neque nisi aspernatur nulla dolor nemo, officiis est, odio ab eveniet magnam repellat, eos ratione explicabo quisquam?
+            </p>
+        </div>
+        <div class="skills-content">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</section>        
+    {% endblock %}

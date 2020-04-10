@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Create users!{% endblock %}
+
+{% block body %}
+    {% block stylesheets %}
+        <link rel="stylesheet" href="../public/assets/css/app.css">
+
+    {% endblock %}
+
+    <div>
+        {{ form(form) }}
+    </div>
+
+
+
+    {% block footer %}
+    {% endblock %}
+
+
+{% endblock %}

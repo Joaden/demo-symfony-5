@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Contact' %}
+
+{% block body %}
+    <div class="jumbotron">
+        <div class="container">
+            <h1>Contact</h1>
+        <form>
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Votre adresse Email</label>
+                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Objet</label>
+                <select class="form-control" id="exampleFormControlSelect1">
+                <option>Demander un rendez vous</option>
+                <option>Signaler une erreur</option>
+                <option>Un renseignement</option>
+                <option>Autre</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1">Votre message</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="4"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Envoyer</button>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
